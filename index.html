@@ -1,404 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>NAHJ AL-SHIFAA GENERAL MEDICAL COMPANY GROUP</title>
 
+<meta name="description" content="NAHJ AL-SHIFAA GENERAL MEDICAL COMPANY GROUP - Comprehensive Healthcare with Excellence & Trust">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-<style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Cairo',sans-serif;
-scroll-behavior:smooth;
-}
-
-body{
-background:#f7fbfd;
-color:#333;
-}
-
-header{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-background:rgba(255,255,255,.95);
-backdrop-filter:blur(8px);
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:15px 8%;
-box-shadow:0 3px 20px rgba(0,0,0,.08);
-z-index:1000;
-}
-
-.logo{
-display:flex;
-align-items:center;
-gap:15px;
-}
-
-.logo img{
-width:70px;
-}
-
-.logo h2{
-color:#2b7a3d;
-font-size:22px;
-}
-
-nav a{
-text-decoration:none;
-margin-left:25px;
-color:#333;
-font-weight:600;
-transition:.3s;
-}
-
-nav a:hover{
-color:#2b7a3d;
-}
-
-.hero{
-
-height:100vh;
-
-background:
-
-linear-gradient(rgba(17,60,32,.65),rgba(17,60,32,.65)),
-url("2.jpg");
-
-background-size:cover;
-background-position:center;
-
-display:flex;
-justify-content:center;
-align-items:center;
-
-text-align:center;
-color:white;
-
-padding:20px;
-
-}
-
-.hero-content{
-
-max-width:900px;
-
-}
-
-.hero img{
-
-width:180px;
-margin-bottom:25px;
-
-}
-
-.hero h1{
-
-font-size:55px;
-margin-bottom:20px;
-
-}
-
-.hero p{
-
-font-size:22px;
-line-height:1.8;
-
-}
-
-.btns{
-
-margin-top:40px;
-
-}
-
-.btn{
-
-display:inline-block;
-
-padding:16px 35px;
-
-border-radius:50px;
-
-text-decoration:none;
-
-font-weight:bold;
-
-margin:10px;
-
-transition:.4s;
-
-}
-
-.btn-green{
-
-background:#53b848;
-color:white;
-
-}
-
-.btn-green:hover{
-
-background:#2b7a3d;
-
-}
-
-.btn-white{
-
-background:white;
-color:#2b7a3d;
-
-}
-
-.btn-white:hover{
-
-background:#53b848;
-color:white;
-
-}
-
-section{
-
-padding:90px 10%;
-
-}
-
-.title{
-
-text-align:center;
-margin-bottom:60px;
-
-}
-
-.title h2{
-
-font-size:40px;
-color:#2b7a3d;
-
-}
-
-.title p{
-
-color:#666;
-margin-top:10px;
-
-}
-
-.about{
-
-display:grid;
-
-grid-template-columns:1fr 1fr;
-
-gap:50px;
-
-align-items:center;
-
-}
-
-.about img{
-
-width:100%;
-border-radius:20px;
-box-shadow:0 10px 30px rgba(0,0,0,.15);
-
-}
-
-.about-text h3{
-
-font-size:35px;
-color:#2b7a3d;
-margin-bottom:20px;
-
-}
-
-.about-text p{
-
-line-height:2;
-font-size:18px;
-
-}
-
-.cards{
-
-display:grid;
-
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-
-gap:30px;
-
-}
-
-.card{
-
-background:white;
-
-padding:35px;
-
-border-radius:18px;
-
-text-align:center;
-
-box-shadow:0 10px 25px rgba(0,0,0,.08);
-
-transition:.4s;
-
-}
-
-.card:hover{
-
-transform:translateY(-10px);
-
-}
-
-.card i{
-
-font-size:55px;
-
-color:#53b848;
-
-margin-bottom:20px;
-
-}
-
-.card h3{
-
-margin-bottom:15px;
-
-color:#2b7a3d;
-
-}
-
-.stats{
-
-background:#2b7a3d;
-
-color:white;
-
-display:grid;
-
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-
-padding:70px;
-
-text-align:center;
-
-}
-
-.stats h2{
-
-font-size:45px;
-
-}
-
-.stats p{
-
-margin-top:10px;
-
-font-size:18px;
-
-}
-
-</style>
-
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header>
+<!-- ===================== -->
+<!-- WhatsApp Floating Btn -->
+<!-- ===================== -->
 
-<div class="logo">
+<a href="https://wa.me/9661384679999" class="whatsapp-btn" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</a>
 
-<img src="logo.png">
+<!-- ===================== -->
+<!-- Hero Section -->
+<!-- ===================== -->
 
-<h2>NAHJ AL-SHIFAA GENERAL MEDICAL COMPANY GROUP</h2>
+<header class="hero">
 
+<div class="overlay"></div>
+
+<nav class="navbar">
+
+<div class="logo-box">
+<img src="logo.png" alt="Nahj Al-Shifaa Logo">
 </div>
-
-<nav>
-
-<a href="#">Home</a>
-
-<a href="#about">About</a>
-
-<a href="#services">Services</a>
-
-<a href="#contact">Contact</a>
 
 </nav>
 
-</header>
-
-<section class="hero">
-
 <div class="hero-content">
 
-<img src="logo.png">
-
-<h1>NAHJ AL-SHIFAA GENERAL MEDICAL COMPLEX</h1>
+<h1>NAHJ AL-SHIFAA GENERAL MEDICAL COMPANY GROUP</h1>
 
 <p>
-
-Providing High Quality Medical Services with Modern Healthcare Standards.
-
+Comprehensive Healthcare with Excellence & Trust
 </p>
 
-<div class="btns">
+<div class="hero-buttons">
 
-<a class="btn btn-green" href="tel:+966138467999">Call Now</a>
+<a href="#contact" class="btn primary">
+Contact Us
+</a>
 
-<a class="btn btn-white"
-href="https://www.instagram.com/nahjalshifaa/"
-target="_blank">
-
-Instagram
-
+<a href="#services" class="btn secondary">
+Our Services
 </a>
 
 </div>
 
 </div>
 
-</section>
+</header>
 
-<section id="about">
+<!-- ===================== -->
+<!-- About -->
+<!-- ===================== -->
 
-<div class="title">
+<section class="about section">
 
+<div class="container">
+
+<div class="section-title">
 <h2>About Us</h2>
-
-<p>Healthcare With Excellence</p>
-
 </div>
 
-<div class="about">
-
-<img src="1.jpg">
-
-<div class="about-text">
-
-<h3>Welcome To NAHJ AL-SHIFAA GENERAL MEDICAL COMPANY GROUP</h3>
+<div class="glass-card">
 
 <p>
-
-Nahj Al-Shifaa General Medical Complex provides comprehensive healthcare services with highly qualified medical professionals, advanced medical equipment, specialized clinics, laboratory, radiology, emergency services, and pharmacy.
-
-Our mission is to provide safe, professional, and high-quality healthcare for every patient.
-
+NAHJ AL-SHIFAA GENERAL MEDICAL COMPANY GROUP is dedicated to delivering
+high-quality healthcare services with professionalism, compassion,
+and innovation. Our medical center combines experienced healthcare
+professionals, advanced diagnostic technologies, and patient-centered
+care to ensure the best medical outcomes. We continuously strive to
+provide comprehensive healthcare solutions that promote wellness,
+prevention, and long-term health for individuals and families across
+the community.
 </p>
 
 </div>
@@ -406,3 +98,240 @@ Our mission is to provide safe, professional, and high-quality healthcare for ev
 </div>
 
 </section>
+
+<!-- ===================== -->
+<!-- Services -->
+<!-- ===================== -->
+
+<section id="services" class="services section">
+
+<div class="container">
+
+<div class="section-title">
+<h2>Our Services</h2>
+</div>
+
+<div class="services-grid">
+
+<div class="card">
+<i class="fas fa-user-doctor"></i>
+<h3>Specialized Clinics</h3>
+</div>
+
+<div class="card">
+<i class="fas fa-flask-vial"></i>
+<h3>Medical Laboratory</h3>
+</div>
+
+<div class="card">
+<i class="fas fa-capsules"></i>
+<h3>Pharmacy</h3>
+</div>
+
+<div class="card">
+<i class="fas fa-x-ray"></i>
+<h3>Radiology</h3>
+</div>
+
+<div class="card">
+<i class="fas fa-truck-medical"></i>
+<h3>Emergency Care</h3>
+</div>
+
+<div class="card">
+<i class="fas fa-heart-pulse"></i>
+<h3>Preventive Healthcare</h3>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ===================== -->
+<!-- Why Choose Us -->
+<!-- ===================== -->
+
+<section class="why-us section">
+
+<div class="container">
+
+<div class="section-title">
+<h2>Why Choose Us</h2>
+</div>
+
+<div class="features-grid">
+
+<div class="feature-card">
+<i class="fas fa-user-nurse"></i>
+<h3>Experienced Medical Team</h3>
+</div>
+
+<div class="feature-card">
+<i class="fas fa-microscope"></i>
+<h3>Advanced Medical Equipment</h3>
+</div>
+
+<div class="feature-card">
+<i class="fas fa-vials"></i>
+<h3>Accurate Laboratory Services</h3>
+</div>
+
+<div class="feature-card">
+<i class="fas fa-hand-holding-heart"></i>
+<h3>Patient-Centered Care</h3>
+</div>
+
+<div class="feature-card">
+<i class="fas fa-award"></i>
+<h3>High Quality Standards</h3>
+</div>
+
+<div class="feature-card">
+<i class="fas fa-hospital"></i>
+<h3>Comfortable Environment</h3>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ===================== -->
+<!-- Gallery -->
+<!-- ===================== -->
+
+<section class="gallery section">
+
+<div class="container">
+
+<div class="section-title">
+<h2>Our Facility</h2>
+</div>
+
+<div class="gallery-grid">
+
+<img src="Home.jpg" alt="Medical Building">
+
+<img src="Home2.jpg" alt="Medical Facility">
+
+<img src="https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=1200&auto=format&fit=crop" alt="Doctors">
+
+<img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=1200&auto=format&fit=crop" alt="Laboratory">
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ===================== -->
+<!-- Contact -->
+<!-- ===================== -->
+
+<section id="contact" class="contact section">
+
+<div class="container">
+
+<div class="section-title">
+<h2>Contact Information</h2>
+</div>
+
+<div class="contact-grid">
+
+<div class="contact-card">
+
+<i class="fas fa-location-dot"></i>
+
+<h3>Address</h3>
+
+<p>
+Abu Abdullah Haseeni Street<br>
+Al Hazam, Qatif,<br>
+Saudi Arabia
+</p>
+
+</div>
+
+<div class="contact-card">
+
+<i class="fas fa-phone"></i>
+
+<h3>Phone</h3>
+
+<p>01384679999</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ===================== -->
+<!-- Map -->
+<!-- ===================== -->
+
+<section class="map-section">
+
+<div class="container">
+
+<div class="section-title">
+<h2>Google Maps</h2>
+</div>
+
+<div class="map-wrapper">
+
+<iframe
+src="https://www.google.com/maps?q=Qatif&output=embed"
+allowfullscreen
+loading="lazy">
+</iframe>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ===================== -->
+<!-- Footer -->
+<!-- ===================== -->
+
+<footer>
+
+<div class="container">
+
+<h3>
+NAHJ AL-SHIFAA GENERAL MEDICAL COMPANY GROUP
+</h3>
+
+<p>
+Abu Abdullah Haseeni Street,
+Al Hazam, Qatif, Saudi Arabia
+</p>
+
+<p>
+Phone: 01384679999
+</p>
+
+<p>
+D-U-N-S Number: 44-898-8353
+</p>
+
+<div class="copyright">
+
+© 2026 NAHJ AL-SHIFAA GENERAL MEDICAL COMPANY GROUP.
+All Rights Reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+</body>
+</html>
