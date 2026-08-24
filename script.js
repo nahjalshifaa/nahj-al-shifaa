@@ -26,6 +26,72 @@ window.addEventListener('scroll', () => {
 toTop?.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
 $('#year').textContent = new Date().getFullYear();
 
+
+// Compact request dropdown in the main navigation
+const requestDropdown = $('.request-dropdown');
+const requestDropdownToggle = $('#requestDropdownToggle');
+const requestDropdownMenu = $('#requestDropdownMenu');
+requestDropdownToggle?.addEventListener('click', e => {
+  e.stopPropagation();
+  const willOpen = requestDropdownMenu.hidden;
+  requestDropdownMenu.hidden = !willOpen;
+  requestDropdown?.classList.toggle('open', willOpen);
+  requestDropdownToggle.setAttribute('aria-expanded', String(willOpen));
+});
+document.addEventListener('click', e => {
+  if (requestDropdown && !requestDropdown.contains(e.target)) {
+    requestDropdownMenu.hidden = true;
+    requestDropdown.classList.remove('open');
+    requestDropdownToggle?.setAttribute('aria-expanded','false');
+  }
+});
+requestDropdownMenu?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  requestDropdownMenu.hidden = true;
+  requestDropdown?.classList.remove('open');
+  requestDropdownToggle?.setAttribute('aria-expanded','false');
+}));
+
+// Service directory starts fully closed. Choosing All or any group opens it.
+const serviceFilters = $$('.service-filter');
+const servicesGrid = $('#servicesGrid');
+const serviceCards = $$('#servicesGrid .service-card');
+
+const closeServicesDirectory = () => {
+  if (!servicesGrid) return;
+  servicesGrid.classList.remove('is-open');
+  servicesGrid.setAttribute('aria-hidden', 'true');
+  serviceFilters.forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-expanded', 'false');
+  });
+};
+
+closeServicesDirectory();
+
+serviceFilters.forEach(btn => btn.addEventListener('click', () => {
+  if (!servicesGrid) return;
+  const filter = btn.dataset.serviceFilter || 'all';
+  const sameOpenFilter = btn.classList.contains('active') && servicesGrid.classList.contains('is-open');
+
+  if (sameOpenFilter) {
+    closeServicesDirectory();
+    return;
+  }
+
+  serviceFilters.forEach(b => {
+    const active = b === btn;
+    b.classList.toggle('active', active);
+    b.setAttribute('aria-expanded', active ? 'true' : 'false');
+  });
+
+  serviceCards.forEach(card => {
+    card.hidden = filter !== 'all' && card.dataset.serviceCategory !== filter;
+  });
+
+  servicesGrid.classList.add('is-open');
+  servicesGrid.setAttribute('aria-hidden', 'false');
+});
+
 const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -179,7 +245,7 @@ document.addEventListener('click', e => {
 
 // Lightweight language toggle for the primary navigation and stats. The full Arabic content remains authoritative.
 const i18n = {
-  navHome:'Home',navAbout:'About',navServices:'Medical Services',navHomeCare:'Home Care',navInsurance:'Insurance',navCorporate:'Corporate Services',navBranches:'Branches',navContact:'Contact',navBook:'Book Appointment',navCompanyRequest:'Corporate Request',navFeedback:'Complaint / Suggestion',motto:'Your care is our priority',brand:'Nahj Al-Shifaa General Medical Complex',heroLabel:'Healthcare for individuals, families and companies',heroText:'Nahj Al-Shifaa brings clinics, diagnostics, insurance procedures and corporate medical examinations together in one convenient experience.',bookNow:'Book an appointment',findBranch:'Find the nearest branch',statGoal:'Our goal is your care',statServices:'Services & specialties',statInsurance:'Insurance partners',statCompanies:'Served 1,000+ companies',statClients:'Served 100,000+ clients'
+  navHome:'Home',navRequests:'Requests',navAbout:'About',navServices:'Medical Services',navHomeCare:'Home Care',navInsurance:'Insurance',navCorporate:'Corporate Services',navBranches:'Branches',navContact:'Contact',navBook:'Book Appointment',navCompanyRequest:'Corporate Request',navFeedback:'Complaint / Suggestion',motto:'Your care is our priority',brand:'Nahj Al-Shifaa General Medical Complex',heroLabel:'Healthcare for individuals, families and companies',heroText:'Nahj Al-Shifaa brings clinics, diagnostics, insurance procedures and corporate medical examinations together in one convenient experience.',bookNow:'Book an appointment',findBranch:'Find the nearest branch',statGoal:'Our goal is your care',statServices:'More than 12 services & specialties',statInsurance:'More than 10 insurance partners',statCompanies:'Served 1,000+ companies',statClients:'Served 100,000+ clients'
 };
 const arText = new Map();
 $$('[data-i18n]').forEach(el => arText.set(el, el.textContent));

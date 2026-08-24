@@ -31,9 +31,14 @@
       <a href="#branches" data-i18n="navBranches">الفروع</a>
       <a href="#contact" data-i18n="navContact">تواصل معنا</a>
       <span class="nav-divider" aria-hidden="true"></span>
-      <a href="#" class="request-nav" data-open-request="appointment" data-i18n="navBook">حجز موعد</a>
-      <a href="#" class="request-nav" data-open-request="company" data-i18n="navCompanyRequest">طلب تعاقد</a>
-      <a href="#" class="request-nav" data-open-request="feedback" data-i18n="navFeedback">شكوى أو اقتراح</a>
+      <div class="request-dropdown">
+        <button class="request-dropdown-toggle" id="requestDropdownToggle" type="button" aria-expanded="false" aria-haspopup="true"><span data-i18n="navRequests">الطلبات</span><b aria-hidden="true">⌄</b></button>
+        <div class="request-dropdown-menu" id="requestDropdownMenu" hidden>
+          <a href="#" data-open-request="appointment" data-i18n="navBook">حجز موعد</a>
+          <a href="#" data-open-request="company" data-i18n="navCompanyRequest">طلب تعاقد</a>
+          <a href="#" data-open-request="feedback" data-i18n="navFeedback">شكوى أو اقتراح</a>
+        </div>
+      </div>
     </nav>
 
     <div class="nav-actions">
@@ -67,8 +72,8 @@
   <section class="stats-section" aria-label="إحصائيات المجمع">
     <div class="container stats-wrap reveal">
       <div class="stat-card"><span class="stat-icon">◎</span><strong><span class="counter" data-count="1">0</span></strong><small data-i18n="statGoal">هدفنا رعايتكم</small></div>
-      <div class="stat-card"><span class="stat-icon">✚</span><strong><span class="counter" data-count="12">0</span>+</strong><small data-i18n="statServices">خدمة وتخصص</small></div>
-      <div class="stat-card"><span class="stat-icon">◈</span><strong><span class="counter" data-count="10">0</span>+</strong><small data-i18n="statInsurance">شركاء تأمين</small></div>
+      <div class="stat-card"><span class="stat-icon">✚</span><strong><span class="counter" data-count="12">0</span>+</strong><small data-i18n="statServices">أكثر من 12 خدمة وتخصص</small></div>
+      <div class="stat-card"><span class="stat-icon">◈</span><strong><span class="counter" data-count="10">0</span>+</strong><small data-i18n="statInsurance">أكثر من 10 شركاء تأمين</small></div>
       <div class="stat-card"><span class="stat-icon">▦</span><strong><span class="counter" data-count="1000">0</span>+</strong><small data-i18n="statCompanies">خدمنا أكثر من 1,000 شركة</small></div>
       <div class="stat-card"><span class="stat-icon">👥</span><strong><span class="counter" data-count="100000">0</span>+</strong><small data-i18n="statClients">خدمنا أكثر من 100,000 عميل</small></div>
     </div>
@@ -92,42 +97,29 @@
 
   <section class="section services" id="services">
     <div class="container">
-      <div class="section-head reveal">
-        <div><span class="eyebrow">التخصصات والخدمات</span><h2>خدمات طبية متكاملة في مكان واحد</h2></div>
+      <div class="section-head services-head reveal">
+        <div><span class="eyebrow">التخصصات والخدمات</span><h2>اختر الخدمة التي تناسب احتياجك</h2><p>قسّمنا الخدمات إلى مجموعات واضحة لتصل إلى العيادة أو القسم المطلوب بسرعة، ويمكنك حجز الموعد مباشرة من بطاقة الخدمة.</p></div>
       </div>
-    </div>
-    <div class="services-marquee reveal" aria-label="التخصصات والخدمات الطبية">
-      <div class="service-row row-one">
-        <div class="service-track">
-          <article class="service-card"><div class="service-icon">🩺</div><h3>عيادة الطب العام</h3><p>الرعاية الأولية وتقييم الحالات اليومية والمتابعة العامة.</p><button data-open-request="appointment" data-department="عيادة الطب العام">طلب موعد</button></article>
-          <article class="service-card"><div class="service-icon">♥</div><h3>عيادة الطب الباطني</h3><p>متابعة الأمراض الباطنية والمزمنة وخطط العلاج.</p><button data-open-request="appointment" data-department="عيادة الطب الباطني">طلب موعد</button></article>
-          <article class="service-card"><div class="service-icon">♀</div><h3>عيادة النساء والولادة</h3><p>رعاية صحية للمرأة ومتابعة الحمل والخدمات النسائية.</p><button data-open-request="appointment" data-department="عيادة النساء والولادة">طلب موعد</button></article>
-          <article class="service-card"><div class="service-icon">●</div><h3>عيادة الأطفال</h3><p>متابعة صحة الأطفال والنمو والحالات الشائعة.</p><button data-open-request="appointment" data-department="عيادة الأطفال">طلب موعد</button></article>
-          <article class="service-card"><div class="service-icon">◇</div><h3>عيادة طب الأسنان</h3><p>فحص وعلاج الأسنان والعناية الوقائية بصحة الفم.</p><button data-open-request="appointment" data-department="عيادة طب الأسنان">طلب موعد</button></article>
-          <article class="service-card urgent"><div class="service-icon">✚</div><h3>عيادة الطوارئ</h3><p>تقييم ورعاية الحالات التي تحتاج إلى تدخل عاجل.</p><a href="#contact">تواصل معنا</a></article>
-          <article class="service-card"><div class="service-icon">🩺</div><h3>عيادة الطب العام</h3><p>الرعاية الأولية وتقييم الحالات اليومية والمتابعة العامة.</p><button data-open-request="appointment" data-department="عيادة الطب العام">طلب موعد</button></article>
-          <article class="service-card"><div class="service-icon">♥</div><h3>عيادة الطب الباطني</h3><p>متابعة الأمراض الباطنية والمزمنة وخطط العلاج.</p><button data-open-request="appointment" data-department="عيادة الطب الباطني">طلب موعد</button></article>
-          <article class="service-card"><div class="service-icon">♀</div><h3>عيادة النساء والولادة</h3><p>رعاية صحية للمرأة ومتابعة الحمل والخدمات النسائية.</p><button data-open-request="appointment" data-department="عيادة النساء والولادة">طلب موعد</button></article>
-          <article class="service-card"><div class="service-icon">●</div><h3>عيادة الأطفال</h3><p>متابعة صحة الأطفال والنمو والحالات الشائعة.</p><button data-open-request="appointment" data-department="عيادة الأطفال">طلب موعد</button></article>
-          <article class="service-card"><div class="service-icon">◇</div><h3>عيادة طب الأسنان</h3><p>فحص وعلاج الأسنان والعناية الوقائية بصحة الفم.</p><button data-open-request="appointment" data-department="عيادة طب الأسنان">طلب موعد</button></article>
-          <article class="service-card urgent"><div class="service-icon">✚</div><h3>عيادة الطوارئ</h3><p>تقييم ورعاية الحالات التي تحتاج إلى تدخل عاجل.</p><a href="#contact">تواصل معنا</a></article>
-        </div>
+      <div class="service-filters reveal" role="tablist" aria-label="تصفية التخصصات والخدمات">
+        <button class="service-filter" type="button" data-service-filter="all" aria-expanded="false">الكل</button>
+        <button class="service-filter" type="button" data-service-filter="clinics" aria-expanded="false">العيادات</button>
+        <button class="service-filter" type="button" data-service-filter="diagnostics" aria-expanded="false">التشخيص والفحوصات</button>
+        <button class="service-filter" type="button" data-service-filter="support" aria-expanded="false">الخدمات المساندة</button>
       </div>
-      <div class="service-row row-two">
-        <div class="service-track">
-          <article class="service-card"><div class="service-icon">⌁</div><h3>قسم المختبر</h3><p>تحاليل وفحوصات مخبرية لدعم التشخيص والمتابعة.</p><button data-open-request="appointment" data-department="قسم المختبر">طلب موعد</button></article>
-          <article class="service-card"><div class="service-icon">▧</div><h3>قسم الأشعة</h3><p>خدمات تصوير تشخيصية مساندة لخطة الطبيب.</p><button data-open-request="appointment" data-department="قسم الأشعة">طلب موعد</button></article>
-          <article class="service-card home-service"><div class="service-icon">⌂</div><h3>الرعاية المنزلية</h3><p>خدمات صحية مختارة في المنزل لراحة المريض واستمرارية المتابعة.</p><a href="#home-care">اعرف المزيد</a></article>
-          <article class="service-card"><div class="service-icon">✓</div><h3>فحص العمالة والإقامة والرخص</h3><p>فحوصات منظمة وفق المتطلبات والإجراءات المعتمدة.</p><button data-open-request="appointment" data-department="فحص العمالة والإقامة والرخص">ابدأ الطلب</button></article>
-          <article class="service-card"><div class="service-icon">🛡</div><h3>قسم التأمين</h3><p>مساندة المراجعين في إجراءات التأمين والتحقق من التغطية.</p><a href="#insurance">شركاء التأمين</a></article>
-          <article class="service-card"><div class="service-icon">🏢</div><h3>الشركات والتعاقدات المباشرة</h3><p>حلول طبية مرنة للمنشآت والموظفين حسب الاحتياج.</p><button data-open-request="company">طلب تعاقد</button></article>
-          <article class="service-card"><div class="service-icon">⌁</div><h3>قسم المختبر</h3><p>تحاليل وفحوصات مخبرية لدعم التشخيص والمتابعة.</p><button data-open-request="appointment" data-department="قسم المختبر">طلب موعد</button></article>
-          <article class="service-card"><div class="service-icon">▧</div><h3>قسم الأشعة</h3><p>خدمات تصوير تشخيصية مساندة لخطة الطبيب.</p><button data-open-request="appointment" data-department="قسم الأشعة">طلب موعد</button></article>
-          <article class="service-card home-service"><div class="service-icon">⌂</div><h3>الرعاية المنزلية</h3><p>خدمات صحية مختارة في المنزل لراحة المريض واستمرارية المتابعة.</p><a href="#home-care">اعرف المزيد</a></article>
-          <article class="service-card"><div class="service-icon">✓</div><h3>فحص العمالة والإقامة والرخص</h3><p>فحوصات منظمة وفق المتطلبات والإجراءات المعتمدة.</p><button data-open-request="appointment" data-department="فحص العمالة والإقامة والرخص">ابدأ الطلب</button></article>
-          <article class="service-card"><div class="service-icon">🛡</div><h3>قسم التأمين</h3><p>مساندة المراجعين في إجراءات التأمين والتحقق من التغطية.</p><a href="#insurance">شركاء التأمين</a></article>
-          <article class="service-card"><div class="service-icon">🏢</div><h3>الشركات والتعاقدات المباشرة</h3><p>حلول طبية مرنة للمنشآت والموظفين حسب الاحتياج.</p><button data-open-request="company">طلب تعاقد</button></article>
-        </div>
+      <div class="services-grid reveal" id="servicesGrid" aria-hidden="true">
+        <article class="service-card" data-service-category="clinics"><div class="service-icon">🩺</div><h3>عيادة الطب العام</h3><p>الرعاية الأولية، تقييم الحالات اليومية والمتابعة العامة.</p><button data-open-request="appointment" data-department="عيادة الطب العام">حجز موعد</button></article>
+        <article class="service-card" data-service-category="clinics"><div class="service-icon">♥</div><h3>عيادة الطب الباطني</h3><p>متابعة الأمراض الباطنية والمزمنة وخطط العلاج.</p><button data-open-request="appointment" data-department="عيادة الطب الباطني">حجز موعد</button></article>
+        <article class="service-card" data-service-category="clinics"><div class="service-icon">♀</div><h3>عيادة النساء والولادة</h3><p>رعاية صحية للمرأة ومتابعة الحمل والخدمات النسائية.</p><button data-open-request="appointment" data-department="عيادة النساء والولادة">حجز موعد</button></article>
+        <article class="service-card" data-service-category="clinics"><div class="service-icon">●</div><h3>عيادة الأطفال</h3><p>متابعة صحة الأطفال والنمو والحالات الشائعة.</p><button data-open-request="appointment" data-department="عيادة الأطفال">حجز موعد</button></article>
+        <article class="service-card" data-service-category="clinics"><div class="service-icon">◇</div><h3>عيادة طب الأسنان</h3><p>فحص وعلاج الأسنان والعناية الوقائية بصحة الفم.</p><button data-open-request="appointment" data-department="عيادة طب الأسنان">حجز موعد</button></article>
+        <article class="service-card urgent" data-service-category="clinics"><div class="service-icon">✚</div><h3>عيادة الطوارئ</h3><p>تقييم ورعاية الحالات التي تحتاج إلى تدخل عاجل.</p><a href="#contact">تواصل معنا</a></article>
+        <article class="service-card ambulance" data-service-category="support"><div class="service-icon">🚑</div><h3>خدمات الإسعاف</h3><p>دعم نقل الحالات وتنسيق خدمات الإسعاف حسب التوفر والحاجة.</p><a href="#contact">تواصل لخدمة الإسعاف</a></article>
+        <article class="service-card" data-service-category="diagnostics"><div class="service-icon">⌁</div><h3>قسم المختبر</h3><p>تحاليل وفحوصات مخبرية لدعم التشخيص والمتابعة.</p><button data-open-request="appointment" data-department="قسم المختبر">طلب الخدمة</button></article>
+        <article class="service-card" data-service-category="diagnostics"><div class="service-icon">▧</div><h3>قسم الأشعة</h3><p>خدمات تصوير تشخيصية مساندة لخطة الطبيب.</p><button data-open-request="appointment" data-department="قسم الأشعة">طلب الخدمة</button></article>
+        <article class="service-card" data-service-category="diagnostics"><div class="service-icon">✓</div><h3>فحص العمالة والإقامة والرخص</h3><p>فحوصات منظمة وفق المتطلبات والإجراءات المعتمدة.</p><button data-open-request="appointment" data-department="فحص العمالة والإقامة والرخص">ابدأ الطلب</button></article>
+        <article class="service-card home-service" data-service-category="support"><div class="service-icon">⌂</div><h3>الرعاية المنزلية</h3><p>خدمات صحية مختارة في المنزل لراحة المريض واستمرارية المتابعة.</p><a href="#home-care">اعرف المزيد</a></article>
+        <article class="service-card" data-service-category="support"><div class="service-icon">🛡</div><h3>قسم التأمين</h3><p>مساندة المراجعين في إجراءات التأمين والتحقق من التغطية.</p><a href="#insurance">شركاء التأمين</a></article>
+        <article class="service-card" data-service-category="support"><div class="service-icon">🏢</div><h3>الشركات والتعاقدات المباشرة</h3><p>حلول طبية مرنة للمنشآت والموظفين حسب الاحتياج.</p><button data-open-request="company">طلب تعاقد</button></article>
       </div>
     </div>
   </section>
@@ -211,7 +203,7 @@
         <label><span>الاسم</span><input id="name" type="text" required placeholder="اكتب الاسم"></label>
         <label><span>رقم الجوال</span><input id="mobile" type="tel" required placeholder="05xxxxxxxx"></label>
         <label><span>الفرع</span><select id="branch" required><option value="safwa">الحزم - صفوى</option><option value="khobar">الجسر - الخبر</option></select></label>
-        <label class="appointment-field"><span>القسم أو العيادة</span><select id="department"><option>عيادة الطب العام</option><option>عيادة الطب الباطني</option><option>عيادة النساء والولادة</option><option>عيادة الأطفال</option><option>عيادة طب الأسنان</option><option>عيادة الطوارئ</option><option>قسم المختبر</option><option>قسم الأشعة</option><option>فحص العمالة والإقامة والرخص</option><option>الرعاية المنزلية</option><option value="أخرى">أخرى</option></select></label>
+        <label class="appointment-field"><span>القسم أو العيادة</span><select id="department"><option>عيادة الطب العام</option><option>عيادة الطب الباطني</option><option>عيادة النساء والولادة</option><option>عيادة الأطفال</option><option>عيادة طب الأسنان</option><option>عيادة الطوارئ</option><option>خدمات الإسعاف</option><option>قسم المختبر</option><option>قسم الأشعة</option><option>فحص العمالة والإقامة والرخص</option><option>الرعاية المنزلية</option><option value="أخرى">أخرى</option></select></label>
         <label class="appointment-field other-field hidden" id="departmentOtherWrap"><span>اكتب القسم أو العيادة</span><input id="departmentOther" type="text" placeholder="اكتب القسم أو العيادة المطلوبة"></label>
         <label class="appointment-field full"><span>التاريخ المفضل</span><input id="day" type="date"></label>
         <label class="company-field hidden"><span>اسم الشركة</span><input id="companyName" type="text" placeholder="اسم الشركة أو المؤسسة"></label>
