@@ -139,6 +139,9 @@ function setRequestTab(type) {
   $$('.appointment-field').forEach(el => el.classList.toggle('hidden', safe !== 'appointment'));
   $$('.company-field').forEach(el => el.classList.toggle('hidden', safe !== 'company'));
   $$('.feedback-field').forEach(el => el.classList.toggle('hidden', safe !== 'feedback'));
+  if ($('#day')) $('#day').required = safe === 'appointment';
+  if ($('#appointmentTime')) $('#appointmentTime').required = safe === 'appointment';
+  if (typeof refreshAppointmentLimits === 'function' && safe === 'appointment') refreshAppointmentLimits();
   if (typeof syncOtherField === 'function') {
     syncOtherField('#department', '#departmentOtherWrap', '#departmentOther');
     syncOtherField('#companyService', '#companyServiceOtherWrap', '#companyServiceOther');
@@ -150,6 +153,7 @@ function openRequest(type='appointment', trigger=null) {
   if (trigger?.dataset.branch && $('#branch')) $('#branch').value = trigger.dataset.branch;
   if (trigger?.dataset.department && $('#department')) $('#department').value = trigger.dataset.department;
   requestModal.hidden = false;
+  refreshAppointmentLimits();
   document.body.classList.add('modal-open');
   setTimeout(() => $('#name')?.focus(), 50);
 }
@@ -195,6 +199,128 @@ function selectedOrOther(selectSel, inputSel) {
   return select.value === 'other' ? (input?.value.trim() || (document.documentElement.lang === 'en' ? 'Other' : 'أخرى')) : (select.selectedOptions[0]?.textContent || select.value);
 }
 
+// Appointment validation: at least 2 hours from now and only during working hours (08:00–22:00).
+const appointmentDay = $('#day');
+const appointmentTime = $('#appointmentTime');
+const WORK_START_HOUR = 8;
+const WORK_END_HOUR = 22; // 22:00 itself is outside booking hours.
+const APPOINTMENT_BUFFER_MS = 2 * 60 * 60 * 1000;
+
+function pad2(n) { return String(n).padStart(2, '0'); }
+function localDateValue(date) {
+  return `${date.getFullYear()}-${pad2(date.getMonth()+1)}-${pad2(date.getDate())}`;
+}
+function localTimeValue(date) {
+  return `${pad2(date.getHours())}:${pad2(date.getMinutes())}`;
+}
+function ceilToQuarterHour(date) {
+  const d = new Date(date);
+  d.setSeconds(0, 0);
+  const remainder = d.getMinutes() % 15;
+  if (remainder) d.setMinutes(d.getMinutes() + (15 - remainder));
+  return d;
+}
+function atLocalTime(date, hour, minute = 0) {
+  const d = new Date(date);
+  d.setHours(hour, minute, 0, 0);
+  return d;
+}
+function minimumAppointmentDateTime() {
+  // Keep the two-hour buffer, then move the result into the next valid working-hours slot.
+  let candidate = ceilToQuarterHour(new Date(Date.now() + APPOINTMENT_BUFFER_MS));
+  const start = atLocalTime(candidate, WORK_START_HOUR, 0);
+  const end = atLocalTime(candidate, WORK_END_HOUR, 0);
+
+  if (candidate < start) return start;
+  if (candidate >= end) {
+    const nextDay = new Date(candidate);
+    nextDay.setDate(nextDay.getDate() + 1);
+    return atLocalTime(nextDay, WORK_START_HOUR, 0);
+  }
+  return candidate;
+}
+function isWithinWorkingHours(date) {
+  const mins = date.getHours() * 60 + date.getMinutes();
+  return mins >= WORK_START_HOUR * 60 && mins < WORK_END_HOUR * 60;
+}
+function refreshAppointmentLimits() {
+  if (!appointmentDay || !appointmentTime) return;
+  const minimum = minimumAppointmentDateTime();
+  const today = localDateValue(new Date());
+  const selectedDay = appointmentDay.value;
+  const previousValue = appointmentTime.value;
+  const ar = document.documentElement.lang === 'ar';
+  appointmentDay.min = today;
+  appointmentTime.innerHTML = '';
+  const placeholder = document.createElement('option');
+  placeholder.value = '';
+  placeholder.textContent = ar ? 'اختر التوقيت' : 'Select time';
+  appointmentTime.appendChild(placeholder);
+  if (!selectedDay || selectedDay < today) { appointmentTime.disabled = !selectedDay; return; }
+  appointmentTime.disabled = false;
+  let firstMinutes = WORK_START_HOUR * 60;
+  if (selectedDay === localDateValue(minimum)) firstMinutes = Math.max(firstMinutes, minimum.getHours()*60 + minimum.getMinutes());
+  for (let mins=firstMinutes; mins < WORK_END_HOUR*60; mins += 15) {
+    const h=Math.floor(mins/60), m=mins%60, value=`${pad2(h)}:${pad2(m)}`;
+    const option=document.createElement('option'); option.value=value;
+    option.textContent=new Date(2000,0,1,h,m).toLocaleTimeString(ar?'ar-SA':'en-US',{hour:'numeric',minute:'2-digit',hour12:true});
+    appointmentTime.appendChild(option);
+  }
+  if ([...appointmentTime.options].some(o=>o.value===previousValue)) appointmentTime.value=previousValue;
+}
+function validateAppointmentDateTime(showAlert = true) {
+  if (!appointmentDay || !appointmentTime) return true;
+  const ar = document.documentElement.lang === 'ar';
+  const dayValue = appointmentDay.value;
+  const timeValue = appointmentTime.value;
+  const today = localDateValue(new Date());
+
+  if (!dayValue || !timeValue) {
+    if (showAlert) alert(ar ? 'يرجى اختيار تاريخ ووقت الموعد.' : 'Please select the appointment date and time.');
+    return false;
+  }
+  if (dayValue < today) {
+    if (showAlert) alert(ar ? 'لا يمكن اختيار تاريخ سابق لليوم.' : 'You cannot select a date earlier than today.');
+    appointmentDay.value = today;
+    refreshAppointmentLimits();
+    return false;
+  }
+
+  const selected = new Date(`${dayValue}T${timeValue}:00`);
+  const minimum = minimumAppointmentDateTime();
+
+  if (Number.isNaN(selected.getTime())) return false;
+
+  if (!isWithinWorkingHours(selected)) {
+    if (showAlert) alert(ar
+      ? 'الحجز متاح فقط خلال مواعيد العمل من الساعة 8:00 صباحًا حتى قبل الساعة 10:00 مساءً. يرجى اختيار وقت داخل مواعيد العمل.'
+      : 'Appointments are available only during working hours from 8:00 AM until before 10:00 PM. Please choose a time within working hours.');
+    return false;
+  }
+
+  if (selected < minimum) {
+    const minDate = localDateValue(minimum);
+    const minTime = localTimeValue(minimum);
+    if (showAlert) alert(ar
+      ? `يجب أن يكون موعد الحجز بعد ساعتين على الأقل من وقت إرسال الطلب وداخل مواعيد العمل من 8:00 صباحًا إلى قبل 10:00 مساءً.\nأقرب موعد متاح حاليًا: ${minDate} الساعة ${minTime}.`
+      : `The appointment must be at least 2 hours after the request is sent and within working hours (8:00 AM to before 10:00 PM).\nThe earliest available time is ${minDate} at ${minTime}.`);
+    return false;
+  }
+  return true;
+}
+appointmentDay?.addEventListener('change', () => {
+  refreshAppointmentLimits();
+  if (appointmentDay.value && appointmentDay.value < localDateValue(new Date())) {
+    validateAppointmentDateTime(true);
+  }
+});
+appointmentTime?.addEventListener('change', () => {
+  refreshAppointmentLimits();
+  if (appointmentDay.value && appointmentTime.value) validateAppointmentDateTime(true);
+});
+refreshAppointmentLimits();
+$('#langBtn')?.addEventListener('click', () => setTimeout(refreshAppointmentLimits, 0));
+
 $('#requestForm')?.addEventListener('submit', e => {
   e.preventDefault();
   const type = requestType.value;
@@ -204,13 +330,14 @@ $('#requestForm')?.addEventListener('submit', e => {
   const name = $('#name').value.trim();
   const mobile = $('#mobile').value.trim();
   const details = $('#details').value.trim();
+  if (type === 'appointment' && !validateAppointmentDateTime(true)) return;
   const labels = ar ? {
     appointment:'طلب حجز موعد', company:'طلب تعاقد شركات', feedback:'شكوى / اقتراح',
-    name:'الاسم', mobile:'رقم الجوال', branch:'الفرع', department:'القسم أو العيادة', date:'التاريخ المفضل',
+    name:'الاسم', mobile:'رقم الجوال', branch:'الفرع', department:'القسم أو العيادة', date:'التاريخ المفضل', time:'التوقيت المفضل',
     companyName:'اسم الشركة', service:'الخدمة المطلوبة', feedbackType:'نوع الرسالة', details:'تفاصيل إضافية'
   } : {
     appointment:'Appointment Request', company:'Corporate Contract Request', feedback:'Complaint / Suggestion',
-    name:'Name', mobile:'Mobile', branch:'Branch', department:'Department', date:'Preferred date',
+    name:'Name', mobile:'Mobile', branch:'Branch', department:'Department', date:'Preferred date', time:'Preferred time',
     companyName:'Company', service:'Required service', feedbackType:'Message type', details:'Additional details'
   };
   const lines = [
@@ -222,6 +349,7 @@ $('#requestForm')?.addEventListener('submit', e => {
   if (type === 'appointment') {
     lines.push(`${labels.department}: ${selectedOrOther('#department', '#departmentOther')}`);
     if ($('#day').value) lines.push(`${labels.date}: ${$('#day').value}`);
+    if ($('#appointmentTime').value) lines.push(`${labels.time}: ${$('#appointmentTime').value}`);
   }
   if (type === 'company') {
     lines.push(`${labels.companyName}: ${$('#companyName').value.trim() || '-'}`);
@@ -280,7 +408,7 @@ const AR_TO_EN = {
   'فرعان لخدمتكم':'Two branches to serve you','اختر الفرع الأقرب إليك':'Choose your nearest branch','موقعان في المنطقة الشرقية لتسهيل الوصول إلى خدمات نهج الشفاء.':'Two locations in the Eastern Province for easier access to Nahj Al-Shifaa services.','صفوى':'Safwa','فرع الحزم - صفوى':'Al Hazm Branch - Safwa','614، الحزم، صفوى 32714':'614, Al Hazm, Safwa 32714','فتح Google Maps':'Open Google Maps','احجز في هذا الفرع':'Book at this branch','الخبر':'Al Khobar','فرع الجسر - الخبر':'Al Jisr Branch - Al Khobar',
   'نحن أقرب مما تتخيل':'We are closer than you think','للاستفسارات الطبية، التأمين أو خدمات الشركات، تواصل معنا وسنوجهك إلى القسم المناسب.':'For medical inquiries, insurance or corporate services, contact us and we will direct you to the right department.','الهاتف':'Phone','واتساب الحزم':'Al Hazm WhatsApp','واتساب الخبر':'Al Khobar WhatsApp','البريد الإلكتروني':'Email',
   'خدمات طبية وتشخيصية وتأمينية في فرعي صفوى والخبر، مع اهتمام أكبر بسهولة الوصول وجودة التجربة.':'Medical, diagnostic and insurance services at our Safwa and Al Khobar branches, with a strong focus on accessibility and service quality.','نهج الشفاء... رعايتكم صحتنا':'Nahj Al-Shifaa... Your health is our care',
-  'خدمة أسرع عبر واتساب':'Faster service via WhatsApp','اختر طلبك، واترك الباقي علينا':'Choose your request, we’ll handle the rest','اختر نوع الطلب وأدخل البيانات الأساسية. سنجهز رسالة واتساب للفرع المختار لتراجعها قبل الإرسال.':'Choose the request type and enter the essential details. We will prepare a WhatsApp message for your selected branch so you can review it before sending.','الاسم':'Name','رقم الجوال':'Mobile Number','الفرع':'Branch','الحزم - صفوى':'Al Hazm - Safwa','الجسر - الخبر':'Al Jisr - Al Khobar','القسم أو العيادة':'Department or Clinic','أخرى':'Other','اكتب القسم أو العيادة':'Enter department or clinic','التاريخ المفضل':'Preferred Date','اسم الشركة':'Company Name','الخدمة المطلوبة':'Required Service','رعاية منزلية للموظفين':'Employee Home Care','اكتب الخدمة المطلوبة':'Enter required service','نوع الرسالة':'Message Type','شكوى':'Complaint','اقتراح':'Suggestion','استفسار':'Inquiry','اكتب نوع الرسالة':'Enter message type','تفاصيل إضافية':'Additional Details','إرسال الطلب عبر واتساب':'Send Request via WhatsApp','سيتم إرسال الطلب إلى رقم واتساب الفرع الذي اخترته.':'The request will be sent to the WhatsApp number of your selected branch.','اختر الفرع للتحدث عبر واتساب':'Choose a branch to chat on WhatsApp','الحزم ·':'Al Hazm ·','الجسر ·':'Al Jisr ·','تحدث معنا الآن':'Chat with us now'
+  'خدمة أسرع عبر واتساب':'Faster service via WhatsApp','اختر طلبك، واترك الباقي علينا':'Choose your request, we’ll handle the rest','اختر نوع الطلب وأدخل البيانات الأساسية. سنجهز رسالة واتساب للفرع المختار لتراجعها قبل الإرسال.':'Choose the request type and enter the essential details. We will prepare a WhatsApp message for your selected branch so you can review it before sending.','الاسم':'Name','رقم الجوال':'Mobile Number','الفرع':'Branch','الحزم - صفوى':'Al Hazm - Safwa','الجسر - الخبر':'Al Jisr - Al Khobar','القسم أو العيادة':'Department or Clinic','أخرى':'Other','اكتب القسم أو العيادة':'Enter department or clinic','التاريخ المفضل':'Preferred Date','التوقيت المفضل':'Preferred Time','اسم الشركة':'Company Name','الخدمة المطلوبة':'Required Service','رعاية منزلية للموظفين':'Employee Home Care','اكتب الخدمة المطلوبة':'Enter required service','نوع الرسالة':'Message Type','شكوى':'Complaint','اقتراح':'Suggestion','استفسار':'Inquiry','اكتب نوع الرسالة':'Enter message type','تفاصيل إضافية':'Additional Details','إرسال الطلب عبر واتساب':'Send Request via WhatsApp','سيتم إرسال الطلب إلى رقم واتساب الفرع الذي اخترته.':'The request will be sent to the WhatsApp number of your selected branch.','اختر الفرع للتحدث عبر واتساب':'Choose a branch to chat on WhatsApp','الحزم ·':'Al Hazm ·','الجسر ·':'Al Jisr ·','تحدث معنا الآن':'Chat with us now'
 };
 const EN_TO_AR = Object.fromEntries(Object.entries(AR_TO_EN).map(([ar,en]) => [en,ar]));
 const ATTR_AR_TO_EN = {

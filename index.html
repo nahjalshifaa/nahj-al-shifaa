@@ -219,7 +219,8 @@
 <label><span>الفرع</span><select id="branch" required=""><option value="safwa">الحزم - صفوى</option><option value="khobar">الجسر - الخبر</option></select></label>
 <label class="appointment-field"><span>القسم أو العيادة</span><select id="department"><option value="عيادة الطب العام">عيادة الطب العام</option><option value="عيادة الطب الباطني">عيادة الطب الباطني</option><option value="عيادة النساء والولادة">عيادة النساء والولادة</option><option value="عيادة الأطفال">عيادة الأطفال</option><option value="عيادة طب الأسنان">عيادة طب الأسنان</option><option value="عيادة الطوارئ">عيادة الطوارئ</option><option value="خدمات الإسعاف">خدمات الإسعاف</option><option value="قسم المختبر">قسم المختبر</option><option value="قسم الأشعة">قسم الأشعة</option><option value="فحص العمالة والإقامة والرخص">فحص العمالة والإقامة والرخص</option><option value="عيادة طب العيون">عيادة طب العيون</option><option value="عيادة الجلدية والتجميل والليزر">عيادة الجلدية والتجميل والليزر</option><option value="عيادة الأنف والأذن والحنجرة">عيادة الأنف والأذن والحنجرة</option><option value="عيادة طب العظام">عيادة طب العظام</option><option value="عيادة المسالك البولية">عيادة المسالك البولية</option><option value="عيادة طب القلب">عيادة طب القلب</option><option value="عيادة التغذية">عيادة التغذية</option><option value="عيادة الجراحة العامة">عيادة الجراحة العامة</option><option value="عيادة طب الأسرة">عيادة طب الأسرة</option><option value="قسم العيادات المتنقلة">قسم العيادات المتنقلة</option><option value="الرعاية المنزلية">الرعاية المنزلية</option><option value="قسم العلاج الطبيعي">قسم العلاج الطبيعي</option><option value="other">أخرى</option></select></label>
 <label class="appointment-field other-field hidden" id="departmentOtherWrap"><span>اكتب القسم أو العيادة</span><input id="departmentOther" placeholder="اكتب القسم أو العيادة المطلوبة" type="text"/></label>
-<label class="appointment-field full"><span>التاريخ المفضل</span><input id="day" type="date"/></label>
+<label class="appointment-field"><span>التاريخ المفضل</span><input id="day" required type="date"/></label>
+<label class="appointment-field"><span>التوقيت المفضل</span><select id="appointmentTime" required><option value="">اختر التوقيت</option></select></label>
 <label class="company-field hidden"><span>اسم الشركة</span><input id="companyName" placeholder="اسم الشركة أو المؤسسة" type="text"/></label>
 <label class="company-field hidden"><span>الخدمة المطلوبة</span><select id="companyService"><option value="تعاقدات طبية مباشرة">تعاقدات طبية مباشرة</option><option value="فحوصات موظفين وعمالة">فحوصات موظفين وعمالة</option><option value="تنسيق احتياجات المنشأة">تنسيق احتياجات المنشأة</option><option value="رعاية منزلية للموظفين">رعاية منزلية للموظفين</option><option value="other">أخرى</option></select></label>
 <label class="company-field other-field hidden" id="companyServiceOtherWrap"><span>اكتب الخدمة المطلوبة</span><input id="companyServiceOther" placeholder="اكتب الخدمة المطلوبة" type="text"/></label>
@@ -242,6 +243,6 @@
 <button aria-label="التحدث عبر واتساب" class="whatsapp-float" id="whatsappFloat" type="button"><span class="wa-label">تحدث معنا الآن</span><span class="wa-circle">◉</span></button>
 </div>
 <button aria-label="العودة للأعلى" class="to-top" id="toTop" type="button">↑</button>
-<script src="script.js?v=20260824-5"></script>
+<script src="script.js?v=20260824-8"></script>
 </body>
 </html>
