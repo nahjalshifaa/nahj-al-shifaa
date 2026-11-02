@@ -251,3 +251,23 @@ html[dir="ltr"] .whatsapp-choice { text-align: left; }
 .home-care-visual img{width:100%;height:100%;object-fit:contain;object-position:center;display:block}
 @media(max-width:920px){.home-care-visual{order:-1;width:min(100%,360px);aspect-ratio:630/710}}
 @media(max-width:640px){.home-care-visual{width:min(100%,330px);border-radius:18px}.home-care-visual img{width:100%;height:100%;object-fit:contain}}
+
+
+/* App download badges */
+.app-download{margin-top:22px;display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.app-download>strong,.footer-app-download strong{font-size:1rem;font-weight:800}
+.app-badges{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.app-badge{width:154px;height:48px;display:flex;align-items:center;justify-content:center;position:relative;border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 5px 16px rgba(0,0,0,.12)}
+.app-badge img{display:block;width:100%;height:100%;object-fit:contain}
+.app-badge-pending{opacity:1;cursor:default;filter:none}
+.app-badge{transition:transform .28s ease,box-shadow .28s ease,filter .28s ease;isolation:isolate}
+.app-badge::after{content:"";position:absolute;inset:-2px;z-index:1;pointer-events:none;background:linear-gradient(115deg,transparent 25%,rgba(255,255,255,.0) 38%,rgba(255,255,255,.9) 50%,rgba(255,255,255,.0) 62%,transparent 75%);transform:translateX(-130%);transition:transform .65s ease}
+.app-badge:hover,.app-badge:focus-visible{transform:translateY(-4px) scale(1.035);box-shadow:0 0 0 2px rgba(23,153,133,.22),0 9px 26px rgba(8,125,145,.28);filter:brightness(1.04)}
+.app-badge:hover::after,.app-badge:focus-visible::after{transform:translateX(130%)}
+.app-badge:focus-visible{outline:3px solid rgba(23,153,133,.45);outline-offset:4px}
+@media(prefers-reduced-motion:reduce){.app-badge,.app-badge::after{transition:none}.app-badge:hover,.app-badge:focus-visible{transform:none}}
+.footer-app-download{margin-top:28px;padding:22px 0;border-top:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:space-between;gap:20px}
+.footer-app-download>div:first-child{display:flex;flex-direction:column;gap:5px}
+.footer-app-download small{color:#a9c3cf}
+.footer-app-download .app-badge{width:145px;height:45px}
+@media(max-width:640px){.home-care-download{align-items:center;text-align:center}.home-care-download .app-badges{justify-content:center}.app-badge{width:142px;height:44px}.footer-app-download{flex-direction:column;align-items:flex-start}.footer-app-download .app-badges{width:100%}}
