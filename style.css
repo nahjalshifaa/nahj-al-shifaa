@@ -271,3 +271,14 @@ html[dir="ltr"] .whatsapp-choice { text-align: left; }
 .footer-app-download small{color:#a9c3cf}
 .footer-app-download .app-badge{width:145px;height:45px}
 @media(max-width:640px){.home-care-download{align-items:center;text-align:center}.home-care-download .app-badges{justify-content:center}.app-badge{width:142px;height:44px}.footer-app-download{flex-direction:column;align-items:flex-start}.footer-app-download .app-badges{width:100%}}
+
+/* Google Play shortcut beside the nearest-branch action in the hero */
+.hero-actions .hero-google-play{width:154px;height:48px;flex:0 0 154px}
+.hero-actions .hero-app-store{width:154px;height:48px;flex:0 0 154px}
+@media(max-width:640px){.hero-actions .hero-google-play,.hero-actions .hero-app-store{width:154px!important;height:46px;justify-self:center;flex:0 0 154px}}
+
+
+/* Keep both app-store badges together on one horizontal row in the hero */
+.hero-actions .hero-store-links{display:flex;align-items:center;gap:8px;flex:0 0 auto;flex-wrap:nowrap;white-space:nowrap}
+.hero-actions .hero-store-links .app-badge{display:block;margin:0}
+@media(max-width:640px){.hero-actions .hero-store-links{width:100%;justify-content:center;gap:8px;flex-wrap:nowrap}.hero-actions .hero-store-links .app-badge{width:calc((100% - 8px)/2)!important;max-width:154px;height:46px;flex:0 1 154px}}
